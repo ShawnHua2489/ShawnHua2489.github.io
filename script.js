@@ -115,16 +115,16 @@ projectCards.forEach(card => {
     observer.observe(card);
 });
 
-// Particle Background Effect
+// Multiple Particles with Random Properties
 class Particle {
     constructor(canvas) {
         this.canvas = canvas;
-        this.x = Math.random() * canvas.width;
+        this.x = Math.random() * canvas.width;  // Random starting position
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = Math.random() * 2 - 1;
-        this.speedY = Math.random() * 2 - 1;
-        this.color = `rgba(46, 204, 113, ${Math.random() * 0.5 + 0.2})`; // Using your primary color
+        this.size = Math.random() * 3 + 1;      // Random size between 1-4 pixels
+        this.speedX = Math.random() * 2 - 1;    // Random horizontal speed (-1 to 1)
+        this.speedY = Math.random() * 2 - 1;    // Random vertical speed (-1 to 1)
+        this.color = `rgba(46, 204, 113, ${Math.random() * 0.5 + 0.2})`; // Random opacity
     }
 
     update() {
@@ -144,8 +144,8 @@ class Particle {
     }
 }
 
-// Initialize particle background
-function initParticleBackground() {
+// Initialize multiple particles
+function initMultipleParticles() {
     const hero = document.querySelector('.hero');
     const canvas = document.createElement('canvas');
     canvas.className = 'particle-canvas';
@@ -153,7 +153,6 @@ function initParticleBackground() {
 
     const ctx = canvas.getContext('2d');
     const particles = [];
-    let animationFrameId;
 
     function resizeCanvas() {
         canvas.width = hero.offsetWidth;
@@ -161,7 +160,7 @@ function initParticleBackground() {
     }
 
     function createParticles() {
-        const particleCount = Math.floor((canvas.width * canvas.height) / 10000);
+        const particleCount = 20;  // Fixed number of particles for testing
         for (let i = 0; i < particleCount; i++) {
             particles.push(new Particle(canvas));
         }
@@ -175,25 +174,7 @@ function initParticleBackground() {
             particle.draw(ctx);
         });
 
-        // Draw connections between nearby particles
-        particles.forEach((particle, i) => {
-            particles.slice(i + 1).forEach(otherParticle => {
-                const dx = particle.x - otherParticle.x;
-                const dy = particle.y - otherParticle.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-
-                if (distance < 100) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(46, 204, 113, ${0.2 * (1 - distance / 100)})`;
-                    ctx.lineWidth = 1;
-                    ctx.moveTo(particle.x, particle.y);
-                    ctx.lineTo(otherParticle.x, otherParticle.y);
-                    ctx.stroke();
-                }
-            });
-        });
-
-        animationFrameId = requestAnimationFrame(animate);
+        requestAnimationFrame(animate);
     }
 
     // Initialize
@@ -204,10 +185,10 @@ function initParticleBackground() {
     // Handle window resize
     window.addEventListener('resize', () => {
         resizeCanvas();
-        particles.length = 0;
-        createParticles();
+        particles.length = 0;  // Clear existing particles
+        createParticles();     // Create new particles
     });
 }
 
-// Start particle background when page loads
-window.addEventListener('load', initParticleBackground); 
+// Start multiple particles when page loads
+window.addEventListener('load', initMultipleParticles); 
