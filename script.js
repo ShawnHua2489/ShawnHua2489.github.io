@@ -3,40 +3,48 @@ const darkModeToggle = document.createElement('button');
 darkModeToggle.innerHTML = '🌙';
 darkModeToggle.className = 'dark-mode-toggle';
 document.body.appendChild(darkModeToggle);
+console.log('Dark mode toggle button created');
 
 let isDarkMode = false;
 darkModeToggle.addEventListener('click', () => {
     isDarkMode = !isDarkMode;
     document.body.classList.toggle('dark-mode');
     darkModeToggle.innerHTML = isDarkMode ? '☀️' : '🌙';
+    console.log('Dark mode toggled:', isDarkMode);
 });
 
 // Typing Animation
 const heroText = document.querySelector('.hero-content h1');
-const originalText = heroText.textContent;
-heroText.textContent = '';
-let i = 0;
+console.log('Hero text found:', heroText);
+if (heroText) {
+    const originalText = heroText.textContent;
+    console.log('Original text:', originalText);
+    heroText.textContent = '';
+    let i = 0;
 
-function typeWriter() {
-    if (i < originalText.length) {
-        heroText.textContent += originalText.charAt(i);
-        i++;
-        setTimeout(typeWriter, 100);
+    function typeWriter() {
+        if (i < originalText.length) {
+            heroText.textContent += originalText.charAt(i);
+            i++;
+            setTimeout(typeWriter, 100);
+        }
     }
-}
 
-// Start typing animation when page loads
-window.addEventListener('load', typeWriter);
+    // Start typing animation when page loads
+    window.addEventListener('load', typeWriter);
+}
 
 // Scroll Progress Indicator
 const progressBar = document.createElement('div');
 progressBar.className = 'scroll-progress';
 document.body.appendChild(progressBar);
+console.log('Progress bar created');
 
 window.addEventListener('scroll', () => {
     const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
     const scrolled = (window.scrollY / windowHeight) * 100;
     progressBar.style.width = `${scrolled}%`;
+    console.log('Scroll progress:', scrolled + '%');
 });
 
 // Smooth scrolling for navigation links
