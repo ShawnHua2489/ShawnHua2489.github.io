@@ -113,4 +113,101 @@ projectCards.forEach(card => {
     card.style.transform = 'translateY(20px)';
     card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     observer.observe(card);
-}); 
+});
+
+// Particle Background Effect
+class Particle {
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 2 - 1;
+        this.speedY = Math.random() * 2 - 1;
+        this.color = `rgba(46, 204, 113, ${Math.random() * 0.5 + 0.2})`; // Using your primary color
+    }
+
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Bounce off edges
+        if (this.x > this.canvas.width || this.x < 0) this.speedX *= -1;
+        if (this.y > this.canvas.height || this.y < 0) this.speedY *= -1;
+    }
+
+    draw(ctx) {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+// Initialize particle background
+function initParticleBackground() {
+    const hero = document.querySelector('.hero');
+    const canvas = document.createElement('canvas');
+    canvas.className = 'particle-canvas';
+    hero.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    const particles = [];
+    let animationFrameId;
+
+    function resizeCanvas() {
+        canvas.width = hero.offsetWidth;
+        canvas.height = hero.offsetHeight;
+    }
+
+    function createParticles() {
+        const particleCount = Math.floor((canvas.width * canvas.height) / 10000);
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle(canvas));
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw(ctx);
+        });
+
+        // Draw connections between nearby particles
+        particles.forEach((particle, i) => {
+            particles.slice(i + 1).forEach(otherParticle => {
+                const dx = particle.x - otherParticle.x;
+                const dy = particle.y - otherParticle.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 100) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(46, 204, 113, ${0.2 * (1 - distance / 100)})`;
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(particle.x, particle.y);
+                    ctx.lineTo(otherParticle.x, otherParticle.y);
+                    ctx.stroke();
+                }
+            });
+        });
+
+        animationFrameId = requestAnimationFrame(animate);
+    }
+
+    // Initialize
+    resizeCanvas();
+    createParticles();
+    animate();
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        particles.length = 0;
+        createParticles();
+    });
+}
+
+// Start particle background when page loads
+window.addEventListener('load', initParticleBackground); 
