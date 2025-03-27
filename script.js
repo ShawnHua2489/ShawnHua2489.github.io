@@ -10,6 +10,13 @@ darkModeToggle.addEventListener('click', () => {
     isDarkMode = !isDarkMode;
     document.body.classList.toggle('dark-mode');
     darkModeToggle.innerHTML = isDarkMode ? '☀️' : '🌙';
+    
+    // Update navbar background color immediately when toggling dark mode
+    const navbar = document.querySelector('.navbar');
+    const isDark = document.body.classList.contains('dark-mode');
+    navbar.style.backgroundColor = isDark ? 'var(--background-dark)' : 'rgba(255, 255, 255, 0.95)';
+    navbar.style.boxShadow = isDark ? '0 2px 5px var(--shadow)' : 'none';
+    
     console.log('Dark mode toggled:', isDarkMode);
 });
 
