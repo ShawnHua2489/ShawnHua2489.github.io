@@ -17,6 +17,69 @@
     --shadow: rgba(0, 0, 0, 0.1);
 }
 
+/* Dark Mode Styles */
+body.dark-mode {
+    --primary-color: #2ecc71;
+    --secondary-color: #27ae60;
+    --text-color: #ecf0f1;
+    --light-text: #bdc3c7;
+    --background-light: #2c3e50;
+    --background-dark: #34495e;
+    --white: #2c3e50;
+    --shadow: rgba(0, 0, 0, 0.3);
+    background-color: var(--background-light);
+    color: var(--text-color);
+}
+
+.dark-mode .navbar {
+    background-color: rgba(44, 62, 80, 0.95);
+}
+
+.dark-mode .project-card {
+    background-color: var(--background-dark);
+}
+
+.dark-mode .about,
+.dark-mode .contact {
+    background-color: var(--background-light);
+}
+
+.dark-mode .projects {
+    background-color: var(--background-dark);
+}
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: var(--white);
+    box-shadow: 0 2px 5px var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    z-index: 1002;
+    transition: width 0.1s ease;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
