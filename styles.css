@@ -38,7 +38,7 @@ body.dark-mode {
     --secondary-color: #27ae60;
     --text-color: #ecf0f1;
     --light-text: #bdc3c7;
-    --background-light: #D3C1AF;  /* Changed from #2c3e50 to its opposite */
+    --background-light: #D3C1AF;  /* This is the opposite color we set */
     --background-dark: #34495e;
     --white: #2c3e50;
     --shadow: rgba(0, 0, 0, 0.3);
@@ -292,7 +292,7 @@ body {
 /* About Section */
 .about {
     padding: 5rem 1rem;
-    background-color: #fff;
+    background-color: var(--background-light);  /* Changed from #fff to use the variable */
 }
 
 .about h2 {
