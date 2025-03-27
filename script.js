@@ -64,11 +64,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Navbar background change on scroll
 const navbar = document.querySelector('.navbar');
 window.addEventListener('scroll', () => {
+    const isDark = document.body.classList.contains('dark-mode');
     if (window.scrollY > 50) {
-        navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+        navbar.style.backgroundColor = isDark ? 'var(--background-dark)' : 'rgba(255, 255, 255, 0.98)';
+        navbar.style.boxShadow = '0 2px 5px var(--shadow)';
     } else {
-        navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+        navbar.style.backgroundColor = isDark ? 'var(--background-dark)' : 'rgba(255, 255, 255, 0.95)';
         navbar.style.boxShadow = 'none';
     }
 });
