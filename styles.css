@@ -86,11 +86,13 @@ body.dark-mode {
 .dark-mode .skills li {
     background-color: var(--background-dark);
     color: var(--text-color);
+    border-color: var(--light-text);
 }
 
 .dark-mode .skills li:hover {
     background-color: var(--primary-color);
     color: var(--white);
+    border-color: var(--primary-color);
 }
 
 .dark-mode #contact-form input,
@@ -331,13 +333,16 @@ body {
     border-radius: 20px;
     font-size: 0.9rem;
     transition: all 0.3s ease;
-    border: 1px solid transparent;  /* Added transparent border */
+    border: 1px solid var(--light-text);  /* Added border */
+    box-shadow: 0 2px 4px var(--shadow);  /* Added shadow */
 }
 
 .skills li:hover {
     background-color: var(--primary-color);
     color: var(--white);
-    transform: scale(1.05);  /* Added scale effect */
+    transform: scale(1.05);
+    border-color: var(--primary-color);  /* Border color on hover */
+    box-shadow: 0 4px 8px var(--shadow);  /* Enhanced shadow on hover */
 }
 
 /* Projects Section */
@@ -411,9 +416,16 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
+    font-family: inherit;  /* Use the same font as the body */
     transition: all 0.3s ease;
     background-color: var(--white);
     color: var(--text-color);
+    width: 100%;  /* Make all inputs full width */
+}
+
+#contact-form textarea {
+    min-height: 150px;  /* Set minimum height for textarea */
+    resize: vertical;  /* Allow vertical resizing only */
 }
 
 #contact-form input:focus,
