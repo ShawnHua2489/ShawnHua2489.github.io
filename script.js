@@ -115,7 +115,7 @@ projectCards.forEach(card => {
     observer.observe(card);
 });
 
-// Multiple Particles with Random Properties
+// Multiple Particles with Random Properties and Connections
 class Particle {
     constructor(canvas) {
         this.canvas = canvas;
@@ -144,7 +144,7 @@ class Particle {
     }
 }
 
-// Initialize multiple particles
+// Initialize multiple particles with connections
 function initMultipleParticles() {
     const hero = document.querySelector('.hero');
     const canvas = document.createElement('canvas');
@@ -166,9 +166,32 @@ function initMultipleParticles() {
         }
     }
 
+    function drawConnections() {
+        particles.forEach((particle, i) => {
+            particles.slice(i + 1).forEach(otherParticle => {
+                const dx = particle.x - otherParticle.x;
+                const dy = particle.y - otherParticle.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 100) {  // Only connect particles within 100 pixels
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(46, 204, 113, ${0.2 * (1 - distance / 100)})`;
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(particle.x, particle.y);
+                    ctx.lineTo(otherParticle.x, otherParticle.y);
+                    ctx.stroke();
+                }
+            });
+        });
+    }
+
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
+        // Draw connections first (so they appear behind particles)
+        drawConnections();
+        
+        // Then draw particles
         particles.forEach(particle => {
             particle.update();
             particle.draw(ctx);
@@ -191,4 +214,32 @@ function initMultipleParticles() {
 }
 
 // Start multiple particles when page loads
-window.addEventListener('load', initMultipleParticles); 
+window.addEventListener('load', initMultipleParticles);
+
+// 3D Hover Effect for Project Cards
+function init3DHoverEffect() {
+    const cards = document.querySelectorAll('.project-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        });
+    });
+}
+
+// Initialize 3D hover effect when page loads
+window.addEventListener('load', init3DHoverEffect); 
