@@ -15,6 +15,21 @@
     --background-dark: #c3cfe2;
     --white: #ffffff;
     --shadow: rgba(0, 0, 0, 0.1);
+
+    /* Alternative Color Schemes (for testing in Dev Tools) */
+    /* Purple Theme */
+    --purple-primary: #9b59b6;
+    --purple-secondary: #8e44ad;
+    --purple-text: #2c3e50;
+    --purple-light: #f5f7fa;
+    --purple-dark: #c3cfe2;
+
+    /* Blue Theme */
+    --blue-primary: #3498db;
+    --blue-secondary: #2980b9;
+    --blue-text: #2c3e50;
+    --blue-light: #f5f7fa;
+    --blue-dark: #c3cfe2;
 }
 
 /* Dark Mode Styles */
